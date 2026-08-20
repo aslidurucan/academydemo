@@ -1,0 +1,17 @@
+# .NET derleme çıktıları
+bin/
+obj/
+
+# Test sonuçları
+[Tt]est[Rr]esult*/
+*.trx
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Yerel gizli ayarlar (gerçek bağlantı dizeleri buraya commit edilmez)
+appsettings.*.local.json
+*.local.json

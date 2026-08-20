@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Catalog.Domain\Academy.Catalog.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Minimal API tipleri (IEndpointRouteBuilder vb.) için: bu proje classlib olduğundan
+         ASP.NET Core paylaşılan framework'ü örtük gelmez. -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
