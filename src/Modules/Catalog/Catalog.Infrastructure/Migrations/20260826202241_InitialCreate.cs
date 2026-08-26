@@ -65,6 +65,12 @@ namespace Academy.Catalog.Infrastructure.Migrations
                 schema: "catalog",
                 table: "Courses",
                 columns: new[] { "Status", "CategoryId", "PublishedAt" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_Status_PublishedAt",
+                schema: "catalog",
+                table: "Courses",
+                columns: new[] { "Status", "PublishedAt" });
         }
 
         /// <inheritdoc />

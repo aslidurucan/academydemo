@@ -79,6 +79,8 @@ namespace Academy.Catalog.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("Status", "PublishedAt");
+
                     b.HasIndex("Status", "CategoryId", "PublishedAt");
 
                     b.ToTable("Courses", "catalog");

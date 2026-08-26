@@ -34,8 +34,15 @@ public sealed class CourseConfiguration : IEntityTypeConfiguration<Course>
             .HasForeignKey(c => c.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Listeleme sorgusunun sık kullandığı filtre/sıralama kombinasyonu için — p95 < 200ms
-        // hedefini (spec 0001 §Constraints) destekler.
+        // Kategori filtreli sorgu yolu için — p95 < 200ms hedefini (spec 0001 §Constraints) destekler.
         builder.HasIndex(c => new { c.Status, c.CategoryId, c.PublishedAt });
+
+        // categoryId verilmeyen (muhtemelen en sık kullanılan) filtresiz tarama yolu için ayrı index —
+        // (Status, CategoryId, PublishedAt) index'i CategoryId ile başladığından bu yolda global
+        // PublishedAt DESC sıralaması için motor ek sort/merge yapmak zorunda kalabilirdi (QA bulgusu).
+        // NOT: Bu index'in gerçekten kullanıldığı referans hacimde (10k kurs/50 kategori, gerçek
+        // Postgres) EXPLAIN ANALYZE ile doğrulanmadı — bu ortamda çalışan bir Postgres yok; öneri
+        // QA'nın işaret ettiği teorik riske karşı savunma amaçlı eklendi, doğrulama borç kalıyor.
+        builder.HasIndex(c => new { c.Status, c.PublishedAt });
     }
 }
