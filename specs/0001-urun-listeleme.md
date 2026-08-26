@@ -62,9 +62,9 @@ Katalogda kayıtlı kurs sayısı arttıkça öğrenci/ziyaretçi, düz bir list
 
 ## Definition of Done
 
-- [x] Tüm Acceptance Criteria karşılandı ve teste bağlandı (bkz. docs/testing.md) — 34/34 test yeşil (`dotnet test`)
+- [x] Tüm Acceptance Criteria karşılandı ve teste bağlandı (bkz. docs/testing.md) — 37/37 test yeşil (`dotnet test`)
 - [x] Frontend ise: her AC için görsel kanıt eklendi — N/A: bu spec yalnızca backend/API (bkz. plan onayı, madde 4); AC'ler API sözleşmesi dilinde yazılı, ekran içermiyor
-- [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/0001-urun-listeleme` branch'inde 6 commit, `[plan 0001/N]` atıflı
+- [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/0001-urun-listeleme` branch'inde 10 commit, `[plan 0001/N]` atıflı
 - [ ] PR şablonu dolduruldu, CI yeşil — branch henüz push edilmedi (push yetkisi Takım Yöneticisi'nde, bkz. docs/git.md §AI Kuralı)
 - [ ] Bu spec specs/done/ klasörüne taşındı — PR merge sonrası yapılacak
 
@@ -72,8 +72,8 @@ Katalogda kayıtlı kurs sayısı arttıkça öğrenci/ziyaretçi, düz bir list
 
 | Metrik | Değer |
 |---|---|
-| Spec revizyon sayısı | |
-| Düzeltme turu sayısı | |
-| Bulgu gerçek/gürültü oranı | |
-| Regresyon sayısı | |
-| Kaçan hata (production'da bulunan) | |
+| Spec revizyon sayısı | 1 — spec bu depoya doğrudan "Onaylandı" durumunda girdi; git geçmişinde daha önceki taslak revizyonu yok. Spec metnindeki tek görünür kanıt: 2026-08-21 tarihli bir netleştirme turu (Requirements'ta 4, Constraints'te 1 madde — toplam 5 satır, tek tarih). Daha erken revizyon olup olmadığı bu depodan doğrulanamaz. |
+| Düzeltme turu sayısı | 1 — QA review sonrası düzeltme turu (`[plan 0001/9]`, 3 commit: `a28589f`, `9d1fc78`, `7f04ac3`) |
+| Bulgu gerçek/gürültü oranı | 3/3 gerçek, 0 gürültü (yanlış çıkan bulgu yok). Ayrım: 2/3 reprodüksiyonla doğrulandı (page taşması: `page=int.MaxValue` repro'su + regresyon testi; pageSize=1 kapsama boşluğu). 1/3 (orta öncelik, index önerisi) QA'nın kendisinin de belirttiği gibi ölçülmedi — kod incelemesiyle geçerli kabul edilip önlem alındı, ama referans hacimde (10k kurs/50 kategori, gerçek Postgres) EXPLAIN ANALYZE ile doğrulanamadı (bu ortamda çalışan Postgres yok). |
+| Regresyon sayısı | 0 — düzeltme turu sonrası tam test paketi (37/37) yeşil; düzeltmeler öncesinde geçen hiçbir test kırılmadı. |
+| Kaçan hata (production'da bulunan) | - (henüz merge/deploy edilmedi) |
