@@ -114,6 +114,23 @@ public class CourseCatalogQueriesTests : IDisposable
         Assert.Equal(3, page.TotalCount);
     }
 
+    // AC-10 regresyon (QA bulgusu, yüksek öncelik): biçimsel olarak geçerli ama aşırı büyük bir page
+    // değeri, düzeltme öncesinde (Page-1)*PageSize hesabını int32'de taşırıp negatif bir Skip
+    // offset'ine sarıyordu — bu da gerçek SQL motorunda (repro: SQLite) hata fırlatmadan sayfa 1
+    // verisini döndürüyordu (AC-10'un beklediği "boş liste + doğru totalCount" yerine).
+    [Fact]
+    public async Task GetPublishedCourses_PageAtInt32OverflowThreshold_DoesNotThrowAndReturnsEmptyResult()
+    {
+        var categoryId = SeedCategory("Programlama");
+        SeedPublishedCourses(categoryId, count: 3);
+
+        var page = await _sut.GetPublishedCoursesAsync(
+            CourseCatalogQuery.Create(page: int.MaxValue.ToString(), pageSize: "100", categoryId: null));
+
+        Assert.Empty(page.Items);
+        Assert.Equal(3, page.TotalCount);
+    }
+
     // AC-11: geçersiz formatlı categoryId → boş liste + totalCount:0 (hata değil).
     [Fact]
     public async Task GetPublishedCourses_InvalidCategoryIdFormat_ReturnsEmptyResult()

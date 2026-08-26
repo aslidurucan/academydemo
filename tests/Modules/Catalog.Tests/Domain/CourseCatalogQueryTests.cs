@@ -36,6 +36,29 @@ public class CourseCatalogQueryTests
         Assert.Equal(100, query.PageSize);
     }
 
+    // QA bulgusu (düşük öncelik): pageSize=1 alt sınır değeri ayrıca pinlenmemişti.
+    [Fact]
+    public void Create_PageSizeExactlyOne_KeepsPageSizeOne()
+    {
+        var query = CourseCatalogQuery.Create(page: "1", pageSize: "1", categoryId: null);
+
+        Assert.Equal(1, query.PageSize);
+    }
+
+    // QA bulgusu (yüksek öncelik): page biçimsel olarak geçerli ama aşırı büyük bir sayı olduğunda
+    // (page-1)*pageSize hesabı int32'yi taşıp negatife sarılıyordu (repro: page="2147483647").
+    // MaxPage clamp'i bu taşmayı, "aralık dışı sayfa" davranışını (AC-10) bozmadan engellemeli.
+    [Fact]
+    public void Create_PageBeyondMaxPage_ClampsToMaxPageWithoutOverflow()
+    {
+        var query = CourseCatalogQuery.Create(page: int.MaxValue.ToString(), pageSize: "100", categoryId: null);
+
+        Assert.Equal(CourseCatalogQuery.MaxPage, query.Page);
+        // (Page-1)*PageSize'ın int32 aritmetiğinde taşmadığını doğrudan doğrula — asıl hatanın nedeni buydu.
+        var offset = (query.Page - 1) * query.PageSize;
+        Assert.True(offset >= 0, $"Skip offset taştı: {offset}");
+    }
+
     [Theory]
     [InlineData("0")]
     [InlineData("-1")]
