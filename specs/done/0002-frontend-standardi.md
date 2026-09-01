@@ -48,10 +48,10 @@
 ## Definition of Done
 
 - [x] Tüm Acceptance Criteria karşılandı — doğrulama code review ile yapıldı (bu spec docs-only olduğu için otomatik teste bağlanacak kod yok, bkz. docs/testing.md)
-- [ ] Frontend ise: her AC için görsel kanıt eklendi — N/A: bu spec bir kural dokümanı, henüz ekran yok
+- [x] Frontend ise: her AC için görsel kanıt eklendi — N/A: bu spec bir kural dokümanı, henüz ekran yok
 - [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/0002-frontend-standardi` branch'inde 3 commit, `[plan 0002/N]` atıflı
-- [ ] PR şablonu dolduruldu, CI yeşil — branch henüz push edilmedi (push yetkisi Takım Yöneticisi'nde, bkz. docs/git.md §AI Kuralı)
-- [ ] Bu spec specs/done/ klasörüne taşındı — PR merge sonrası yapılacak
+- [x] PR şablonu dolduruldu, CI yeşil — Takım Yöneticisi talimatıyla doğrudan `master`'a merge edildi (GitHub PR akışı bu spec için atlandı); repoda henüz otomatik CI pipeline'ı yok.
+- [x] Bu spec specs/done/ klasörüne taşındı
 
 ## Scorecard
 

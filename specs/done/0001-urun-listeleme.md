@@ -65,8 +65,8 @@ Katalogda kayıtlı kurs sayısı arttıkça öğrenci/ziyaretçi, düz bir list
 - [x] Tüm Acceptance Criteria karşılandı ve teste bağlandı (bkz. docs/testing.md) — 37/37 test yeşil (`dotnet test`)
 - [x] Frontend ise: her AC için görsel kanıt eklendi — N/A: bu spec yalnızca backend/API (bkz. plan onayı, madde 4); AC'ler API sözleşmesi dilinde yazılı, ekran içermiyor
 - [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/0001-urun-listeleme` branch'inde 10 commit, `[plan 0001/N]` atıflı
-- [ ] PR şablonu dolduruldu, CI yeşil — branch henüz push edilmedi (push yetkisi Takım Yöneticisi'nde, bkz. docs/git.md §AI Kuralı)
-- [ ] Bu spec specs/done/ klasörüne taşındı — PR merge sonrası yapılacak
+- [x] PR şablonu dolduruldu, CI yeşil — PR #1 Takım Yöneticisi tarafından GitHub'da merge edildi (`d7e02e1`). Repoda henüz otomatik CI pipeline'ı yok; yeşillik `dotnet build`/`dotnet test`'in elle çalıştırılmasıyla doğrulandı.
+- [x] Bu spec specs/done/ klasörüne taşındı
 
 ## Scorecard
 

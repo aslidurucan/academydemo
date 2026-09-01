@@ -55,9 +55,9 @@
 - [x] ESLint temiz.
 - [x] Prettier (kontrol modu) temiz.
 - [x] Kritik akış smoke testi (Vitest + Testing Library) yeşil — 4/4 test.
-- [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/frontend-001-urun-listesi` branch'inde 6 commit.
-- [ ] PR şablonu dolduruldu, CI yeşil — branch henüz push edilmedi.
-- [ ] Bu spec specs/done/ klasörüne taşındı — PR merge sonrası yapılacak.
+- [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/frontend-001-urun-listesi` branch'inde 7 commit.
+- [x] PR şablonu dolduruldu, CI yeşil — Takım Yöneticisi talimatıyla doğrudan `master`'a merge edildi (GitHub PR akışı bu spec için atlandı); repoda henüz otomatik CI pipeline'ı yok, yeşillik elle doğrulandı.
+- [x] Bu spec specs/done/ klasörüne taşındı
 
 ## Scorecard
 
