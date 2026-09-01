@@ -39,32 +39,32 @@
 
 ## Acceptance Criteria
 
-- [ ] Ürünler yüklenirken ekranda skeleton (yükleme) görünümü gösterilir.
-- [ ] Katalogda ürün yokken (`totalCount: 0`) kart grid'i boş/sessiz kalmaz; "henüz ürün yok" mesajı ve yönlendirici bir eylem içeren boş durum (EmptyState) gösterilir.
-- [ ] API isteği hata döndüğünde Türkçe, eylem önerili bir hata mesajı ve "tekrar dene" eylemi içeren hata durumu (ErrorState) gösterilir; teknik hata metni ekrana yansımaz.
-- [ ] Ekran ilk açıldığında parametre verilmeden varsayılan (ilk) sayfa gösterilir.
-- [ ] Kullanıcı sayfalama kontrolüyle sonraki/önceki sayfaya geçebilir; grid, geçilen sayfanın ürünleriyle güncellenir.
-- [ ] Listede yalnızca yayınlanmış (aktif) ürünler kart olarak görünür; taslak/pasif ürün hiçbir sayfada görünmez.
-- [ ] Her ürün kartında görsel alanı, ürün adı, kategori rozeti ve fiyat bilgisi birlikte görünür.
-- [ ] Üst bar marka alanını ve gezinmeyi gösterir; içerik alanı ürün listesini barındırır.
+- [x] Ürünler yüklenirken ekranda skeleton (yükleme) görünümü gösterilir. — Otomatik test kanıtı: `CatalogPage.test.tsx` "shows skeleton while loading..." (ekran görüntüsü değil — yükleme çok hızlı geçtiği için canlı yakalamak güvenilir değildi, bkz. DoD notu).
+- [x] Katalogda ürün yokken (`totalCount: 0`) kart grid'i boş/sessiz kalmaz; "henüz ürün yok" mesajı ve yönlendirici bir eylem içeren boş durum (EmptyState) gösterilir. — Otomatik test kanıtı: `CatalogPage.test.tsx` "shows empty state..." (ekran görüntüsü yok, bkz. DoD notu).
+- [x] API isteği hata döndüğünde Türkçe, eylem önerili bir hata mesajı ve "tekrar dene" eylemi içeren hata durumu (ErrorState) gösterilir; teknik hata metni ekrana yansımaz. — Canlı ekran görüntüsü + otomatik test (`CatalogPage.test.tsx` "shows error state without leaking technical details...").
+- [x] Ekran ilk açıldığında parametre verilmeden varsayılan (ilk) sayfa gösterilir. — Canlı ekran görüntüsü (gerçek Postgres'e karşı çalışan backend, "Sayfa 1 / 1").
+- [x] Kullanıcı sayfalama kontrolüyle sonraki/önceki sayfaya geçebilir; grid, geçilen sayfanın ürünleriyle güncellenir. — Otomatik test kanıtı: `CatalogPage.test.tsx` "navigates to the next page...". Canlı ekran görüntüsünde yalnızca buton disabled/enabled sınır durumu görüldü (6 tohum kursu tek sayfaya sığdığından gerçek sayfa geçişi canlı yakalanmadı).
+- [x] Listede yalnızca yayınlanmış (aktif) ürünler kart olarak görünür; taslak/pasif ürün hiçbir sayfada görünmez. — Canlı ekran görüntüsü: 7 tohumlanan kurstan (1 taslak) yalnızca 6 yayınlanmış olan listelendi.
+- [x] Her ürün kartında görsel alanı, ürün adı, kategori rozeti ve fiyat bilgisi birlikte görünür. — Canlı ekran görüntüsü (görsel alanı yapısal olarak var; `picsum.photos` kapak URL'leri bu sandboxed ortamda internet erişimi olmadığı için yüklenmedi — uygulama hatası değil).
+- [x] Üst bar marka alanını ve gezinmeyi gösterir; içerik alanı ürün listesini barındırır. — Canlı ekran görüntüsü.
 
 ## Definition of Done
 
-- [ ] Her Acceptance Criteria için ekran görüntüsü kanıtı eklendi.
-- [ ] Tip kontrolü (`tsc --noEmit`) temiz.
-- [ ] ESLint temiz.
-- [ ] Prettier (kontrol modu) temiz.
-- [ ] Kritik akış smoke testi (Vitest + Testing Library) yeşil.
-- [ ] Commit'ler docs/git.md formatına uygun, plan atıflı.
-- [ ] PR şablonu dolduruldu, CI yeşil.
-- [ ] Bu spec specs/done/ klasörüne taşındı.
+- [ ] Her Acceptance Criteria için ekran görüntüsü kanıtı eklendi. — **Kısmen**: 5/8 AC için canlı ekran görüntüsü var (hata durumu, varsayılan sayfa, taslak gizliliği, kart alanları, kabuk); skeleton/boş durum/sayfa-geçişi için yalnızca otomatik test kanıtı var, ayrı ekran görüntüsü yok (skeleton çok hızlı geçiyor, boş durum için tohum veriyi geçici silmek gerekirdi — zaman/kapsam nedeniyle atlandı). İstenirse tamamlanır.
+- [x] Tip kontrolü (`tsc --noEmit`) temiz.
+- [x] ESLint temiz.
+- [x] Prettier (kontrol modu) temiz.
+- [x] Kritik akış smoke testi (Vitest + Testing Library) yeşil — 4/4 test.
+- [x] Commit'ler docs/git.md formatına uygun, plan atıflı — `feature/frontend-001-urun-listesi` branch'inde 6 commit.
+- [ ] PR şablonu dolduruldu, CI yeşil — branch henüz push edilmedi.
+- [ ] Bu spec specs/done/ klasörüne taşındı — PR merge sonrası yapılacak.
 
 ## Scorecard
 
 | Metrik | Değer |
 |---|---|
-| Spec revizyon sayısı | |
-| Düzeltme turu sayısı | |
-| Bulgu gerçek/gürültü oranı | |
-| Regresyon sayısı | |
-| Kaçan hata (production'da bulunan) | |
+| Spec revizyon sayısı | 1 — Durum alanı Taslak → Onaylandı (bu oturumda); Requirements/AC içeriği değiştirilmedi. |
+| Düzeltme turu sayısı | 0 — QA review turu henüz yapılmadı. |
+| Bulgu gerçek/gürültü oranı | - (QA turu henüz yapılmadı) |
+| Regresyon sayısı | 0 |
+| Kaçan hata (production'da bulunan) | - (henüz merge/deploy edilmedi) |
