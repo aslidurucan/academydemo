@@ -25,7 +25,7 @@ Videolu eğitim ürünleri satan bir e-ticaret platformu (Udemy benzeri). **Mod�
 | Adlandırma, katmanlar, hata yönetimi, `decimal` kuralı | [docs/conventions.md](docs/conventions.md) |
 | Branch stratejisi, commit formatı, PR şartları | [docs/git.md](docs/git.md) |
 | Test stratejisi (backend + frontend), CI kapıları | [docs/testing.md](docs/testing.md) |
-| Frontend konvansiyonları | [docs/frontend.md](docs/frontend.md) |
+| Frontend standardı (dil/yapı, API, tasarım sistemi, a11y, kalite kapıları) | [docs/frontend.md](docs/frontend.md) |
 | Mimari kararların gerekçesi (ADR) | [docs/decisions/](docs/decisions/) |
 | Roller | [docs/roles/](docs/roles/) — oturum açılışında rolünü üstlen. |
 | Sorun protokolleri | [docs/ap.md](docs/ap.md) — AP kodlarının çözümü. |
@@ -40,3 +40,4 @@ Videolu eğitim ürünleri satan bir e-ticaret platformu (Udemy benzeri). **Mod�
 - Commit/PR açarken [docs/git.md](docs/git.md) formatını birebir uygula; kendi başına format basitleştirme.
 - Testsiz / görsel kanıtsız PR açma — bkz. [docs/testing.md](docs/testing.md).
 - Bir spec tamamlandığında `specs/done/`'a taşı (bkz. [specs/TEMPLATE.md](specs/TEMPLATE.md) Definition of Done).
+- Her frontend işi [docs/frontend.md](docs/frontend.md) standardına göre denetlenir — kişiye değil dosyaya göre.

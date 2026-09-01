@@ -1,38 +1,68 @@
-# Frontend Konvansiyonları (İskelet)
+# Frontend Standardı
 
-> Bu belge şu an **iskelet** halinde. 1.8 numaralı dilimde (slice) profesyonel standarda genişletilecek: tasarım token'ları, bileşen envanteri, kalite kapıları. Şimdilik aşağıdaki asgari kurallar geçerli — bkz. [AGENTS.md](../AGENTS.md), [docs/testing.md](testing.md).
+> Bu belge artık iskelet değil — **profesyonel frontend standardımızdır.** Bundan sonra her frontend işi bu dosyaya göre denetlenir, kişiye göre değil. Süreç/git kuralları için [docs/git.md](git.md), test stratejisi için [docs/testing.md](testing.md), spec süreci için [specs/TEMPLATE.md](../specs/TEMPLATE.md).
 
-## Stack
+## Dil ve Yapı
 
-- React + Vite + TypeScript, `frontend/` klasöründe.
-- Frontend, backend modülleriyle bire bir eşlenmez; ekran/akış bazlı organize olur — ama hangi API'yi çağırdığı her zaman bellidir (aşağıya bkz.).
+**Kural: TypeScript zorunlu.** `.js`/`.jsx` yok — yeni dosya her zaman `.ts`/`.tsx`.
 
-## API Erişimi
+Klasör yapısı:
 
-- Tüm API çağrıları **tek bir client dosyasından** geçer (ör. `frontend/src/api/client.ts`).
-- Bileşenler `fetch`/`axios` çağrısını doğrudan yapmaz; client dosyasındaki fonksiyonları çağırır.
-- Bu kural sayesinde backend endpoint'i değiştiğinde (route, response şekli) tek bir yer güncellenir.
+```
+frontend/src/
+  features/<feature>/     ekranlar; o feature'a özel bileşen/hook/durum
+  shared/
+    ui/                   ortak, feature-bağımsız bileşenler — bkz. Bileşen Envanteri
+    api/                  TEK API client — bkz. API Disiplini
+```
 
-## Zorunlu Ekran Durumları
+Bir bileşen birden fazla feature'da kullanılacaksa `shared/ui`'a taşınır; tek feature'a özgü kalıyorsa `features/<feature>` içinde kalır.
 
-Veri getiren her ekran/bileşen üç durumu da ele almak **zorunda**:
+## API Disiplini
 
-- **Yükleniyor** — iskelet/spinner.
-- **Boş** — veri yok durumu; kullanıcıya ne yapması gerektiğini söyler.
-- **Hata** — kullanıcıya anlaşılır, iş diliyle yazılmış mesaj.
+**Kural: tüm istekler `shared/api` içindeki tek client'tan geçer.** Bileşen içine endpoint URL'i yazılMAZ, bileşenden doğrudan `fetch`/`axios` çağrısı yapılMAZ.
 
-## Hata Mesajları
+- DTO tipleri backend sözleşmesinden türetilir — response şekli `shared/api` içinde bir kez tanımlanır, bileşenler onu import eder, kendi tipini icat etmez.
+- Backend endpoint'i (route, response şekli) değiştiğinde güncellenecek tek yer `shared/api` olur.
 
-- Kullanıcıya **teknik hata metni sızmaz** — stack trace, exception mesajı, HTTP status kodu ekranda asla gösterilmez.
-- Teknik detay yalnızca konsola/log'a yazılır; arayüz her zaman "ne oldu, ne yapabilirsin" diliyle konuşur.
+## Tasarım Sistemi
 
-## Dilimler (Slices)
+**Kural: gömülü sabit değer (hex/px) yasak.** Renk, aralık (spacing), tipografi, köşe yarıçapı — hepsi tek bir token dosyasından gelir; bileşenler doğrudan değer değil, token kullanır.
 
-- Her frontend dilimi bir mini-spec'le koşar (bkz. [specs/TEMPLATE.md](../specs/TEMPLATE.md)); spec'siz frontend değişikliği yapılmaz.
-- Her dilimin kabul kriterleri görsel kanıtla kapatılır (bkz. [docs/testing.md](testing.md)).
+**Bileşen Envanteri:** `Button` · `Card` · `Badge` · `EmptyState` · `ErrorState` · `Skeleton`.
 
-## Sırada — 1.8'de Genişletilecek
+Her yeni ekran önce bu envantere bakar. Envanterde karşılığı varsa onu kullanır; yoksa yeni bileşeni **önerir** (bkz. [AGENTS.md](../AGENTS.md) Öneri Kuralı — öneri + gerekçe, karar Takım Yöneticisi'nde) — sessizce yeni bir varyant türetmez.
 
-- Tasarım token'ları (renk, tipografi, boşluk ölçeği)
-- Bileşen envanteri (ortak buton/form/kart bileşenleri)
-- Kalite kapıları (erişilebilirlik, performans bütçesi, görsel regresyon)
+## Üç Durum Kuralı
+
+**Kural: her ekran üç durumu da tasarlar — yükleme (skeleton), boş, hata.** Biri eksikse ekran eksik sayılır, PR'a hazır değildir.
+
+- Hata durumunda kullanıcıya teknik metin sızmaz: stack trace, HTTP status kodu, exception mesajı ekranda asla görünmez.
+- Hata mesajı **Türkçe** ve **eylem önerilidir** — ör. "Kurslar yüklenemedi. Tekrar dene." "Bir hata oluştu" gibi belirsiz mesaj yeterli değildir.
+
+## Erişilebilirlik Tabanı
+
+**Kural: semantik HTML — `div` yığını değil.**
+
+- Form alanları her zaman etiketli (`<label htmlFor>` veya `aria-label`).
+- Klavyeyle gezilebilirlik: tüm etkileşimli öğelere `Tab` ile ulaşılır, odak (focus) durumu görünürdür.
+- Yeterli kontrast: metin/arka plan WCAG AA eşiğinin altına düşmez.
+
+## Kalite Kapıları
+
+**Kural: typecheck + ESLint + Prettier zorunlu; kritik akışa smoke test.**
+
+| Kapı | Araç | Zorunluluk |
+|---|---|---|
+| Tip kontrolü | `tsc --noEmit` | Her PR |
+| Lint | ESLint | Her PR |
+| Format | Prettier (kontrol modu) | Her PR |
+| Smoke test | Vitest + Testing Library | Kritik akışlar (satın alma, giriş, kurs izleme başlatma) |
+
+Komutlar `frontend/package.json`'da tanımlı olur (`typecheck`, `lint`, `format:check`, `test`) — CI bunları çağırır, elle çalıştırmaya güvenilmez.
+
+## Süreç
+
+- Her frontend dilimi bir mini-spec'le koşar: `specs/frontend-XXX-<ad>.md` (bkz. [specs/TEMPLATE.md](../specs/TEMPLATE.md)).
+- Görsel kanıt (ekran görüntüsü) **VERIFY'ın parçasıdır** — QA rolü diff'i spec'e karşı bu kanıtla doğrular (bkz. [docs/roles/qa.md](roles/qa.md)).
+- Branch/commit/PR kuralları [docs/git.md](git.md) ile birebir aynıdır — frontend için ayrı bir istisna yoktur.
