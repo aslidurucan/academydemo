@@ -1,0 +1,46 @@
+/**
+ * Tasarım token'ları — tek dosya (docs/frontend.md §Tasarım Sistemi).
+ * Bileşenler doğrudan hex/px değeri yazmaz, buradaki custom property'leri kullanır.
+ * Somut palet değerleri bu dilimde (specs/frontend-001-urun-listesi.md) ilk kez belirlendi
+ * (spec 0002, Constraints: "somut palet ilk frontend diliminde gelir").
+ */
+:root {
+  /* Renk */
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-border: #e1e3e8;
+  --color-text-primary: #16181d;
+  --color-text-secondary: #5b5f6a;
+  --color-accent: #2f5fff;
+  --color-accent-contrast: #ffffff;
+  --color-error: #8f1d16;
+  --color-error-bg: #fdecea;
+  --color-error-border: #f3b9b4;
+  --color-skeleton-base: #e6e8ec;
+  --color-skeleton-shine: #f2f3f5;
+  --color-focus-ring: #2f5fff;
+
+  /* Aralık (spacing) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Tipografi */
+  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height-base: 1.5;
+
+  /* Köşe / gölge */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-card: 0 1px 2px rgba(16, 18, 23, 0.06), 0 1px 3px rgba(16, 18, 23, 0.08);
+}
